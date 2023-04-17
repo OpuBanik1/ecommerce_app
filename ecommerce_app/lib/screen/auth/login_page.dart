@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         showToast('Email or Password is incorrect');
       }
     } catch (e) {
-      showToast('e');
+      showToast('Error ${e}');
     }
   }
 
@@ -163,19 +163,21 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 40,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_fromKey.currentState!.validate()) {
-                        login();
-                      } else {
-                        return showToast('Please give correct information');
-                      }
-                    },
-                    child: Text('Submit'),
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(25),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8))),
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_fromKey.currentState!.validate()) {
+                          login();
+                        } else {
+                          return showToast('Please give correct information');
+                        }
+                      },
+                      child: Text('Submit'),
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(25),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                    ),
                   )
                 ],
               ),

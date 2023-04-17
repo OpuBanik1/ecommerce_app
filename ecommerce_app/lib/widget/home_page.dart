@@ -20,7 +20,11 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.blueAccent,
         items: <Widget>[
-          Icon(Icons.home, size: 30),
+          Icon(
+            Icons.home,
+            size: 30,
+            semanticLabel: 'Home',
+          ),
           Icon(Icons.list, size: 30),
           Icon(Icons.notifications, size: 30),
         ],
