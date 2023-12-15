@@ -3,9 +3,11 @@ import 'dart:ui';
 
 import 'package:ecommerce_app/customhttp/custom_http.dart';
 import 'package:ecommerce_app/model/order_page_model.dart';
+import 'package:ecommerce_app/provider/order_provider.dart';
 import 'package:ecommerce_app/widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart ' as http;
+import 'package:provider/provider.dart';
 
 class Order_page extends StatefulWidget {
   static Order_page? fromJson;
@@ -17,30 +19,16 @@ class Order_page extends StatefulWidget {
 }
 
 class _Order_pageState extends State<Order_page> {
-  List<OrderModel> orderList = [];
-  fetchOrderData() async {
-    OrderModel orderModel;
-    var link = '${baseUrl}all/orders';
-    var response = await http.get(Uri.parse(link),
-        headers: await CustomHttp.getHeadersWithToken());
-    var data = jsonDecode(response.body);
-    for (var i in data) {
-      orderModel = OrderModel.fromJson(i);
-      setState(() {
-        orderList.add(orderModel);
-      });
-    }
-  }
-
   @override
   void initState() {
-    fetchOrderData();
+    Provider.of<Order_provider>(context, listen: false).getOrderList();
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+   final orderList= Provider.of<Order_provider>(context).orderList;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

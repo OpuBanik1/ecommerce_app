@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:ecommerce_app/navbar/order_page.dart';
 import 'package:ecommerce_app/widget/common_widget.dart';
 import 'package:ecommerce_app/widget/home_page.dart';
@@ -18,7 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> _fromKey = GlobalKey();
+  // GlobalKey<FormState> _fromKey = GlobalKey();
+  final _fromKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool passwordVisible = true;
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       map['password'] = passwordController.text.toString();
 
       var response = await http.post(Uri.parse(link), body: map);
-      // print('ddddddddddddddddddddddddddddd${response.body}');
+      print('ddddddddddddddddddddddddddddd${response.body}');
       var data = jsonDecode(response.body);
       print('Access token is ${data['access_token']}');
       setState(() {
@@ -52,7 +52,11 @@ class _LoginPageState extends State<LoginPage> {
         showToast('Email or Password is incorrect');
       }
     } catch (e) {
-      showToast('Error ${e}');
+      setState(() {
+        isLoading = false;
+      });
+      print(e);
+      showToast('Error is aaaaaa ');
     }
   }
 
@@ -163,21 +167,19 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 40,
                   ),
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_fromKey.currentState!.validate()) {
-                          login();
-                        } else {
-                          return showToast('Please give correct information');
-                        }
-                      },
-                      child: Text('Submit'),
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(25),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8))),
-                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_fromKey.currentState!.validate()) {
+                        login();
+                      } else {
+                        return showToast('Please give correct information');
+                      }
+                    },
+                    child: Text('Submit'),
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(25),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8))),
                   )
                 ],
               ),
